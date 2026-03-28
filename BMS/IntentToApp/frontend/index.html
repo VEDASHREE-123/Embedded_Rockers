@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic AI Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="apps.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- AUTHENTICATION OVERLAY -->
+    <div id="auth-overlay" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.95); backdrop-filter:blur(10px); z-index:9999; display:flex; justify-content:center; align-items:center; transition: opacity 0.5s ease;">
+        <div style="background:rgba(255,255,255,0.05); padding:2.5rem; border-radius:16px; border:1px solid rgba(255,255,255,0.1); width:100%; max-width:400px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.5); text-align:center; font-family:'Outfit', sans-serif;">
+            <div style="display:flex; justify-content:center; align-items:center; gap:0.5rem; margin-bottom:1.5rem;">
+                <span class="pulse-dot"></span>
+                <h2 style="margin:0; font-size:1.5rem; font-weight:600; color:#fff;">Purpose Matrix™</h2>
+            </div>
+            
+            <p style="color:#94a3b8; margin-bottom:2rem; font-size:0.95rem;">Sign in to securely access your workspaces.</p>
+            
+            <form id="auth-form" onsubmit="
+                event.preventDefault(); 
+                document.getElementById('login-btn').innerText='Authenticating...'; 
+                fetch('http://127.0.0.1:5000/api/login', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email: document.getElementById('login-email').value, password: document.getElementById('login-pass').value})})
+                .then(r => r.json())
+                .then(d => {
+                    if(d.success){
+                        document.getElementById('auth-overlay').style.opacity='0'; setTimeout(()=>{document.getElementById('auth-overlay').style.display='none'}, 500);
+                    } else {
+                        alert(d.message); document.getElementById('login-btn').innerText='Sign In';
+                    }
+                }).catch(() => {
+                    alert('Backend offline! Entering mock mode.');
+                    document.getElementById('auth-overlay').style.opacity='0'; setTimeout(()=>{document.getElementById('auth-overlay').style.display='none'}, 500);
+                });
+            ">
+                <input type="email" id="login-email" required placeholder="Email Address" style="width:100%; padding:0.8rem 1rem; margin-bottom:1rem; box-sizing:border-box; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:#fff; font-family:inherit; outline:none; transition:border-color 0.3s;" onfocus="this.style.borderColor='#3b82f6'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'">
+                
+                <input type="password" id="login-pass" required placeholder="Password" style="width:100%; padding:0.8rem 1rem; margin-bottom:1.5rem; box-sizing:border-box; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:#fff; font-family:inherit; outline:none; transition:border-color 0.3s;" onfocus="this.style.borderColor='#3b82f6'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'">
+                
+                <button type="submit" id="login-btn" style="width:100%; padding:0.8rem; background:linear-gradient(135deg, #3b82f6, #8b5cf6); border:none; border-radius:8px; color:#fff; font-weight:600; font-size:1rem; cursor:pointer; margin-bottom:1.5rem; transition:transform 0.2s; box-shadow:0 4px 15px rgba(59, 130, 246, 0.4);" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">Sign In</button>
+            </form>
+
+            <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;">
+                <div style="flex:1; height:1px; background:rgba(255,255,255,0.1);"></div>
+                <span style="color:#64748b; font-size:0.85rem;">or continue with</span>
+                <div style="flex:1; height:1px; background:rgba(255,255,255,0.1);"></div>
+            </div>
+            
+            <div style="display:flex; gap:1rem;">
+                <button onclick="document.getElementById('auth-overlay').style.opacity='0'; setTimeout(()=>{document.getElementById('auth-overlay').style.display='none'}, 500)" style="flex:1; padding:0.7rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; cursor:pointer; display:flex; justify-content:center; align-items:center; transition:background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                    <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                </button>
+                <button onclick="document.getElementById('auth-overlay').style.opacity='0'; setTimeout(()=>{document.getElementById('auth-overlay').style.display='none'}, 500)" style="flex:1; padding:0.7rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; cursor:pointer; display:flex; justify-content:center; align-items:center; transition:background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                    <svg width="22" height="22" viewBox="0 0 24 24"><path fill="#fff" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.15 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.61 1.51-1.37 2.97-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                </button>
+            </div>
+            <p style="margin-top:2rem; font-size:0.85rem; color:#64748b;">Don't have an account? <span style="color:#3b82f6; cursor:pointer; text-decoration:none;" onclick="
+                if(!document.getElementById('login-email').value || !document.getElementById('login-pass').value) return alert('Please enter an email and password above, then click here to register!');
+                fetch('http://127.0.0.1:5000/api/register', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email: document.getElementById('login-email').value, password: document.getElementById('login-pass').value})})
+                .then(r => r.json())
+                .then(d => { alert(d.message); if(d.success) document.getElementById('login-btn').click(); })
+            ">Create one now</span></p>
+        </div>
+    </div>    <!-- IMMERSIVE AI NEURAL NETWORK BACKGROUND -->
+    <canvas id="bg-canvas"
+        style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;"></canvas>
+
+    <!-- STANDARD NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="pulse-dot"></span>
+            Purpose Matrix™
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#directory">Solutions Directory</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN SCROLLING WEBPAGE CONTENT -->
+    <div class="page-wrapper">
+
+        <!-- FULL SCREEN IMMERSIVE HERO SECTION -->
+        <section id="home" class="scroll-section full-screen">
+            <div class="hero-content">
+                <h1 class="hero-title">Replace Every App With<br>A Single Purpose.</h1>
+
+                <div class="magic-input-wrapper"
+                    style="margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1rem; max-width: 600px;">
+                    <input type="text" id="magic-input" class="magic-input">
+                    <button class="primary-btn" id="magic-btn" style="width: max-content;">Generate Workspace ✨</button>
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <a href="#directory" class="primary-btn">Explore Directory ➔</a>
+                </div>
+            </div>
+
+            <!-- Dynamic Custom Project Logo (Abstract AI / Intent Core) -->
+            <div class="hero-logo-box">
+                <svg viewBox="0 0 100 100" class="intent-logo-svg">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#38bdf8" />
+                            <stop offset="100%" stop-color="#3b82f6" />
+                        </linearGradient>
+                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="3" result="blur" />
+                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                    </defs>
+                    <!-- Ambient Outer Ring -->
+                    <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(56, 189, 248, 0.2)" stroke-width="1" />
+                    <!-- Rotating Dashed Tech Intelligence Ring -->
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="url(#grad1)" stroke-width="2"
+                        stroke-dasharray="8 6" class="rotating-ring" />
+                    <!-- Inner Solid Processing Core -->
+                    <circle cx="50" cy="50" r="22" fill="url(#grad1)" filter="url(#glow)" />
+                    <!-- Inner Neural Pulse Beat -->
+                    <circle cx="50" cy="50" r="12" fill="#ffffff" filter="url(#glow)">
+                        <animate attributeName="r" values="8; 15; 8" dur="3s" repeatCount="indefinite" />
+                    </circle>
+                    <!-- App Node Satellites (Representing distinct distinct domain apps converging) -->
+                    <circle cx="10" cy="50" r="4" fill="#10b981" filter="url(#glow)" class="satellite-1" />
+                    <circle cx="90" cy="50" r="3" fill="#ef4444" filter="url(#glow)" class="satellite-2" />
+                    <circle cx="50" cy="10" r="5" fill="#f59e0b" filter="url(#glow)" class="satellite-3" />
+                </svg>
+            </div>
+        </section>
+
+
+
+        <!-- 20 CATEGORIES DOMAIN HUB -->
+        <section id="directory" class="scroll-section">
+            <h2 class="section-heading">Solutions Directory</h2>
+            <p style="text-align:center; color:#94a3b8; margin-top:-1.5rem; margin-bottom: 3rem; font-size:1.1rem;">
+                Click any industry domain below to render its functional micro-app UI in real-time.
+            </p>
+
+            <div class="grid-container" id="category-grid">
+                <!-- Javascript maps the 20 stylized Icon Cards here dynamically -->
+            </div>
+        </section>
+
+        <!-- STANDARD FOOTER -->
+        <footer class="alt-bg">
+            <div class="footer-content">
+                <div class="nav-brand" style="margin-bottom: 1rem; justify-content: center;">
+                    <span class="pulse-dot"></span>
+                    Purpose Matrix™
+                </div>
+
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- POPUP MODAL FOR DYNAMIC APPS -->
+    <div id="loading-modal" class="modal">
+        <div class="modal-content glass-app" style="text-align: center; max-width: 400px;">
+            <div class="spinner"></div>
+            <h2 style="margin-top: 1.5rem;">Building your workspace...</h2>
+        </div>
+    </div>
+
+    <div id="app-modal" class="modal">
+        <div class="modal-content glass-app">
+            <button class="close-modal" onclick="closeAppModal()" id="back-home-btn">✕</button>
+            <div id="dynamic-canvas"></div>
+            <button class="secondary-btn" onclick="closeAppModal()" style="margin-top:2rem; width:100%;">🔙 Back to Home
+                Screen</button>
+        </div>
+    </div>
+
+    <script src="apps.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

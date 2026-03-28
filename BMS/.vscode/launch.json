@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Frontend - Chrome",
+            "type": "msedge",
+            "request": "launch",
+            "file": "c:\\Users\\vedashree k a\\OneDrive\\Desktop\\BMS\\IntentToApp\\frontend\\index.html"
+        },
+        {
+            "name": "Backend - Flask API",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "c:\\Users\\vedashree k a\\OneDrive\\Desktop\\BMS\\IntentToApp\\backend\\app.py",
+            "console": "integratedTerminal"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Run Full IntentToApp",
+            "configurations": [
+                "Backend - Flask API",
+                "Frontend - Chrome"
+            ]
+        }
+    ]
+}
