@@ -79,7 +79,8 @@ let currentIntent = "";
 
 const domainCategories = [
     { id: 'travel', icon: '✈️', name: 'Travel Planning' },
-    { id: 'finance', icon: '💰', name: 'Finance Management' }
+    { id: 'finance', icon: '💰', name: 'Finance Management' },
+    { id: 'event', icon: '🎉', name: 'Event Planning' }
 ];
 
 /** Initialize Website Dynamics */
@@ -110,6 +111,7 @@ function detectCategoryFromText(text) {
     
     if (/(trip|travel|flight|hotel|vacation|goa|days|tour)/.test(text)) return 'travel';
     if (/(budget|expense|spend|income|money|salary|save|₹|\$)/.test(text)) return 'finance';
+    if (/(event|party|birthday|wedding|invite|guest|planning|venue)/.test(text)) return 'event';
     
     return 'travel'; // fallback
 }

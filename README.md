@@ -45,7 +45,16 @@ This creates a unified, intelligent, and evolving interface that works across mu
 - Loan & EMI calculator
 - Bill & insurance tracker
 
+**🎉 Event Planning Module**
+- Interactive event dashboard
+- Guest list & RSVP tracking
+- Real-time budget planner with visual expense progress
+- Interactive task checklist with assignee tracking
+- Vendor directory and service management
+- Day-of-event chronological timeline
+
 ### ⚡ Advanced Features
+- Secure User Authentication (SQLite Database)
 - Multi-intent merging (Hybrid apps)
 - Modular UI architecture
 - Responsive design
