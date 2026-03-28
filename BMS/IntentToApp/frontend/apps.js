@@ -1,4 +1,4 @@
-const specialApps = ['travel', 'finance', 'healthcare', 'education', 'event'];
+const specialApps = ['travel', 'finance'];
 
 function isSpecialApp(intentId) {
     return specialApps.includes(intentId);
@@ -17,12 +17,6 @@ function renderSpecialApp(intentId) {
         renderTravelApp(wrapper);
     } else if (intentId === 'finance') {
         renderFinanceApp(wrapper);
-    } else if (intentId === 'healthcare') {
-        renderHealthcareApp(wrapper);
-    } else if (intentId === 'education') {
-        renderEducationApp(wrapper);
-    } else if (intentId === 'event') {
-        renderEventApp(wrapper);
     }
 }
 

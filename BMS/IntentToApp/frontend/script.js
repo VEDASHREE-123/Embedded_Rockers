@@ -79,10 +79,7 @@ let currentIntent = "";
 
 const domainCategories = [
     { id: 'travel', icon: '✈️', name: 'Travel Planning' },
-    { id: 'finance', icon: '💰', name: 'Finance Management' },
-    { id: 'healthcare', icon: '🏥', name: 'Healthcare' },
-    { id: 'education', icon: '🎓', name: 'Education' },
-    { id: 'event', icon: '🎉', name: 'Event Planning' }
+    { id: 'finance', icon: '💰', name: 'Finance Management' }
 ];
 
 /** Initialize Website Dynamics */
@@ -113,9 +110,6 @@ function detectCategoryFromText(text) {
     
     if (/(trip|travel|flight|hotel|vacation|goa|days|tour)/.test(text)) return 'travel';
     if (/(budget|expense|spend|income|money|salary|save|₹|\$)/.test(text)) return 'finance';
-    if (/(doctor|health|symptom|pain|hospital|medicine|pill|water|sick)/.test(text)) return 'healthcare';
-    if (/(study|exam|course|assignment|subject|learn|student)/.test(text)) return 'education';
-    if (/(party|wedding|birthday|event|guest|celebrate)/.test(text)) return 'event';
     
     return 'travel'; // fallback
 }

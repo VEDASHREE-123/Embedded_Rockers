@@ -115,8 +115,8 @@ body {
 .about-card p { color: #cbd5e1; font-size: 1.15rem; line-height: 1.8; }
 
 /* 20 CATEGORIES DOMAIN GRID */
-.grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; max-width: 1400px; margin: 0 auto;}
-.category-card { background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(8px); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem 1rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+.grid-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 3rem; max-width: 1400px; margin: 0 auto;}
+.category-card { width: 300px; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(8px); border: 1px solid var(--border); border-radius: 16px; padding: 3rem 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; }
 .category-card:hover { transform: translateY(-5px); background: rgba(56, 189, 248, 0.15); border-color: var(--accent); box-shadow: 0 10px 25px rgba(56,189,248,0.25); }
 .category-icon { font-size: 3.5rem; display: block; margin-bottom: 1rem; }
 .category-name { font-size: 1.1rem; font-weight: 600; color: var(--text-main); text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
